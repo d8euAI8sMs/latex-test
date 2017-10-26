@@ -1,0 +1,18 @@
+version: '{build}'
+
+environment:
+  pdftexify_cp1251:
+    texify --pdf --src-specials --tex-option="--src -src-specials --tcx=CP1251 --shell-escape --enable-write18" --batch --tex-option=--interaction=nonstopmode --tex-option=--synctex=-1
+
+cache:
+  - c:\miktex -> .\miktex\miktex-install.bat
+
+install:
+  - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
+  - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe .\miktex\miktex-install.bat
+
+build_script:
+  - '%pdftexify_cp1251% report.tex'
+
+artifacts:
+  - path: 'report.pdf'
