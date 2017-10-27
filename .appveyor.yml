@@ -8,7 +8,7 @@ cache:
   - c:\miktex -> .\appveyor-miktex-install\miktex-install.bat
 
 install:
-  - git submodule update --init --recursive
+  - git submodule update --init --recursive --force
   - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
   - cd .\appveyor-miktex-install
   - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe .\miktex-install.bat
