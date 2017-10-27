@@ -4,11 +4,16 @@ environment:
   pdftexify_cp1251:
     texify --pdf --src-specials --tex-option="--src -src-specials --tcx=CP1251 --shell-escape --enable-write18" --batch --tex-option=--interaction=nonstopmode --tex-option=--synctex=-1
 
+clone_script:
+  - git clone -q --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - git checkout -qf %APPVEYOR_REPO_COMMIT%
+  - git submodule update --init --recursive
+    
 cache:
   - c:\miktex -> .\appveyor-miktex-install\miktex-install.bat
 
 install:
-  - git submodule update --init --recursive --force
   - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
   - cd .\appveyor-miktex-install
   - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe .\miktex-install.bat
